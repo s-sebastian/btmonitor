@@ -8,6 +8,7 @@ pyppeteer = "*"
 "bs4" = "*"
 django = "*"
 mysqlclient = "*"
+djangorestframework = "*"
 
 [dev-packages]
 
