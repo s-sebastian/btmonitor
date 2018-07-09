@@ -43,7 +43,11 @@ def time_to_sec(t):
     return timezone.timedelta(seconds=ret)
 
 async def fetch():
-    browser = await launch(headless=True, args=['--no-sandbox'])
+    browser = await launch(
+        executablePath='/usr/lib/chromium-browser/libs/chromium-browser',
+        headless=True,
+        args=['--no-sandbox']
+    )
     page = await browser.newPage()
     await page.goto(URL, {'timeout': 10000})
     await page.waitForSelector('[ng-bind="serialNumber"]', options={'timeout': 10000})
