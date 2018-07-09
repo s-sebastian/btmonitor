@@ -7,7 +7,7 @@ from django.utils import timezone
 
 class Note(models.Model):
     hash = models.CharField(max_length=32, unique=True)
-    note_type = models.CharField(max_length=50)
+    note_type = models.CharField(max_length=100)
 
 
     def __str__(self):
