@@ -1,9 +1,9 @@
 from django.utils import timezone
 from rest_framework import generics
 from rest_framework.renderers import JSONRenderer
-from .models import Note, SitePinger
-from .serializers import SitePingerSerializer
-from .pagination import SitePingerPagination
+from api.models import Note, SitePinger
+from api.serializers import SitePingerSerializer
+from api.pagination import SitePingerPagination
 
 
 # Create your views here.
