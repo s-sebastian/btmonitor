@@ -8,7 +8,7 @@ urlpatterns = [
         views.SitePingerListView.as_view(),
         name='sitepinger_list'
     ),
-    path('sitepingers/<pk>/',
+    path('sitepingers/<int:pk>/',
         views.SitePingerDetailView.as_view(),
         name='sitepinger_detail'
     ),
