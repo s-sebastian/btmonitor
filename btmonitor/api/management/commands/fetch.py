@@ -7,11 +7,12 @@ from bs4 import BeautifulSoup
 from hashlib import md5
 from pyppeteer import launch
 from pyppeteer.errors import TimeoutError
+from django.conf import settings
 from django.utils import timezone
 from django.core.management.base import BaseCommand, CommandError
 from api.models import Note, SitePinger
 
-URL = 'http://192.168.1.254/0000016400/gui/#/basicStatus'
+URL = settings.FETCH_URL
 
 def is_online(host='1.1.1.1'):
     try:
