@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from api.models import Note, SitePinger
+from .models import Note, SitePinger
 
 
 class NoteSerializer(serializers.ModelSerializer):
