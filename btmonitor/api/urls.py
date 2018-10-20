@@ -12,4 +12,12 @@ urlpatterns = [
         views.SitePingerDetailView.as_view(),
         name='sitepinger_detail'
     ),
+    path('downtime/',
+        views.DowntimeListView.as_view(),
+        name='offline_list'
+    ),
+    path('failures/',
+        views.FailureListView.as_view(),
+        name='failure_list'
+    ),
 ]

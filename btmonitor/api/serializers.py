@@ -9,6 +9,7 @@ class NoteSerializer(serializers.ModelSerializer):
 
 
 class SitePingerSerializer(serializers.ModelSerializer):
+    #created = serializers.DateTimeField(format='iso-8601')
     #note = NoteSerializer(many=False, read_only=True)
     note = serializers.PrimaryKeyRelatedField(
         many=False,
