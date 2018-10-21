@@ -67,7 +67,9 @@ def parse(html):
     status = bs.find(id='conn_status_help').find_next('a').text.strip()
     system_uptime = bs.find(id='system_up_help').find_next('p').text.strip()
     network_uptime = bs.find(id='network_up_help').find_next('p').text.strip()
-    down_sync, up_sync = (tag.find_next('p').text.strip() for tag in bs.find_all(id='down_sync_help'))
+    down_sync, up_sync = (
+        tag.find_next('p').text.strip() for tag in bs.find_all(id='down_sync_help')
+    )
 
     ret = {
         'status': status,
@@ -96,6 +98,9 @@ class Command(BaseCommand):
         except TimeoutError as e:
             dt['status'] = 'Timeout'
             error = e
+            raise CommandError(e)
+        except BrowserError as e:
+            error = 'Failed to connect to local browser'
             raise CommandError(e)
         except Exception as e:
             error = e
