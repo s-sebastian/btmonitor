@@ -21,13 +21,11 @@ class Command(BaseCommand):
             }
             if options['dry_run']:
                 qs = SitePinger.objects.filter(**kwargs).aggregate(
-                    Min('created'),
-                    Max('created'),
-                    count=Count('*')
+                    Min('created'), Max('created'), count=Count('*')
                 )
-                msg = self.style.WARNING('DRY-RUN: ') + f"{qs['count']} record(s) will be deleted"
+                msg = self.style.WARNING('DRY-RUN: ') + f'{qs["count"]} record(s) will be deleted'
                 if qs['count'] != 0:
-                    msg += f" [{qs['created__min']} <--> {qs['created__max']}]"
+                    msg += f' [{qs["created__min"]} <--> {qs["created__max"]}]'
             else:
                 with connection.cursor() as cur:
                     cur.execute('SET @@session.sql_log_bin = 0')
