@@ -13,7 +13,7 @@ class Note(models.Model):
         return f'{self.hash}, {self.note_type}'
 
 
-class PingQuerySet(models.QuerySet):
+class SitePingerQuerySet(models.QuerySet):
     def streaks(self):
         queryset = self.values_list('created', 'online').order_by('created')
         entry = queryset.first()
@@ -36,7 +36,7 @@ class SitePinger(models.Model):
     created = models.DateTimeField(db_index=True, default=timezone.now)
     online = models.BooleanField()
     note = models.ForeignKey(Note, on_delete=models.SET_DEFAULT, default=None, null=True)
-    objects = PingQuerySet.as_manager()
+    objects = SitePingerQuerySet.as_manager()
 
     class Meta:
         ordering = ['-created']
