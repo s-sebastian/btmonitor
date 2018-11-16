@@ -67,3 +67,39 @@ class DowntimeListView(APIView):
             .annotate(month=TruncMonth('created')) \
             .values_list('month', flat=True).distinct().order_by('-month')
         return Response([self.get_data(m) for m in months])
+
+
+# Notes
+
+# SitePingerListView() - a few queryset exmaples
+'''
+queryset = SitePinger.objects.filter(~Q(status='Connected') & Q(online=False)).order_by('-created')
+queryset = SitePinger.objects.filter(note__isnull=False)
+queryset = SitePinger.objects.select_related('note').filter(note__isnull=False)
+'''
+
+# get_data() - list comprehension to get the results
+'''
+[{f'start: {start[0]}', f'end: {end[0]}', f'duration: {end[0] - start[0]}'}
+    for start, end in SitePinger.objects.streaks() if start[1] is False]
+'''
+
+# get() - Group by month using itertools.groupby
+'''
+>>> from api.models import SitePinger
+>>> from api.views import DowntimeListView
+>>> import itertools
+>>> obj = DowntimeListView()
+>>> res = obj.get('req')
+>>> res.status_code
+200
+>>> for group, igroup in itertools.groupby(data[0]['results'], lambda i: i['start'].strftime('%Y-%m')):
+...     print(group)
+...     for entry in igroup:
+...         print(entry['start'], entry['end'])
+... 
+2018-11
+2018-11-08 04:15:08.109883+00:00 2018-11-08 04:19:15.740350+00:00
+2018-11-02 21:16:10.363187+00:00 2018-11-02 21:17:10.005428+00:00
+2018-11-02 03:07:16.088278+00:00 2018-11-02 03:08:15.894782+00:00
+'''
