@@ -6,7 +6,7 @@ import time
 from bs4 import BeautifulSoup
 from hashlib import md5
 from pyppeteer import launch
-from pyppeteer.errors import TimeoutError
+from pyppeteer.errors import BrowserError, TimeoutError
 from django.conf import settings
 from django.utils import timezone
 from django.core.management.base import BaseCommand, CommandError
