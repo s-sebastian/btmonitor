@@ -1,3 +1,4 @@
+from django.db.models.functions import TruncMonth
 from django.utils import timezone
 from rest_framework import generics, permissions
 from rest_framework.views import APIView
@@ -12,9 +13,6 @@ class SitePingerListView(generics.ListAPIView):
     Returns a list of all SitePingers
     """
     queryset = SitePinger.objects.all()
-    #queryset = SitePinger.objects.filter(~Q(status='Connected') & Q(online=False)).order_by('-created')
-    #queryset = SitePinger.objects.filter(note__isnull=False)
-    #queryset = SitePinger.objects.select_related('note').filter(note__isnull=False)
     serializer_class = SitePingerSerializer
     pagination_class = SitePingerPagination
 
@@ -42,25 +40,30 @@ class DowntimeListView(APIView):
     """
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
-    def get(self, request, format=None):
+    @staticmethod
+    def get_data(date):
         results = []
         total = timezone.timedelta()
         tz = timezone.get_current_timezone()
         queryset = SitePinger.objects.filter(
-            created__month=timezone.datetime.today().month
+            created__month=date.month
         ).streaks()
-        #[{f'start: {start[0]}', f'end: {end[0]}', f'duration: {end[0] - start[0]}'}
-        #    for start, end in SitePinger.objects.streaks() if start[1] is False]
         for i, entry in enumerate(queryset, 1):
             start, end = entry
             duration = end[0] - start[0]
             total += duration
             results.append({
-                'id': i, 
                 'start': start[0].astimezone(tz),
                 'end': end[0].astimezone(tz),
                 'duration': duration,
             })
-        results = sorted(results, key=lambda k: k['id'], reverse=True)
-        offline = {'total': total, 'results': results}
-        return Response(offline)
+        results = sorted(results, key=lambda k: k['start'], reverse=True)
+        offline = {'date': date.strftime('%b-%Y'), 'total': total, 'results': results}
+        return offline
+
+    def get(self, request, year=None, month=None, format=None):
+        month = (timezone.now() - timezone.timedelta(days=3*365/12)).month
+        months = SitePinger.objects.filter(created__month__gt=month) \
+            .annotate(month=TruncMonth('created')) \
+            .values_list('month', flat=True).distinct().order_by('-month')
+        return Response([self.get_data(m) for m in months])
