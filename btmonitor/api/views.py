@@ -46,9 +46,12 @@ class DowntimeListView(APIView):
         total = timezone.timedelta()
         tz = timezone.get_current_timezone()
         queryset = SitePinger.objects.filter(
-            created__month=date.month
-        ).streaks()
-        for i, entry in enumerate(queryset, 1):
+            created__month=date.month,
+            created__year=date.year,
+        )
+        if not queryset.exists():
+            return {'detail': 'No data available.'}
+        for i, entry in enumerate(queryset.streaks(), 1):
             start, end = entry
             duration = end[0] - start[0]
             total += duration
@@ -58,15 +61,19 @@ class DowntimeListView(APIView):
                 'duration': duration,
             })
         results = sorted(results, key=lambda k: k['start'], reverse=True)
-        offline = {'date': date.strftime('%b-%Y'), 'total': total, 'results': results}
+        offline = {'date': date, 'total': total, 'results': results}
         return offline
 
     def get(self, request, year=None, month=None, format=None):
-        month = (timezone.now() - timezone.timedelta(days=3*365/12)).month
-        months = SitePinger.objects.filter(created__month__gt=month) \
-            .annotate(month=TruncMonth('created')) \
-            .values_list('month', flat=True).distinct().order_by('-month')
-        return Response([self.get_data(m) for m in months])
+        if not year or not month:
+            today = timezone.now()
+            year = today.year
+            month = today.month
+        try:
+            date = timezone.datetime(year=year, month=month, day=1)
+        except ValueError as e:
+            return Response({'detail': 'Invalid date.'}, status=400)
+        return Response(self.get_data(date))
 
 
 # Notes
