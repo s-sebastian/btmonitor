@@ -1,8 +1,8 @@
 from django.urls import path, register_converter
 from . import converters, views
 
-register_converter(converters.YearConverter, 'yyyy')
-register_converter(converters.MonthConverter, 'mm')
+register_converter(converters.YearConverter, 'year')
+register_converter(converters.MonthConverter, 'month')
 
 app_name = 'api'
 
@@ -19,7 +19,7 @@ urlpatterns = [
         views.DowntimeListView.as_view(),
         name='offline_list'
     ),
-    path('downtime/<yyyy:year>/<mm:month>/',
+    path('downtime/<year:year>/<month:month>/',
         views.DowntimeListView.as_view(),
         name='offline_list'
     ),
