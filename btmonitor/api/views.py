@@ -65,11 +65,13 @@ class DowntimeListView(APIView):
         return offline
 
     def get(self, request, year=None, month=None, format=None):
-        if not year or not month:
+        if (year or month) is None:
             today = timezone.now()
             year = today.year
             month = today.month
         try:
+            if year == 1:
+                raise ValueError
             date = timezone.datetime(year=year, month=month, day=1)
         except ValueError as e:
             return Response({'detail': 'Invalid date.'}, status=400)
