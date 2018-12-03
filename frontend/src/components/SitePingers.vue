@@ -15,11 +15,11 @@
     <b-container v-if="!loading" class="text-center text-muted">
       <b-row>
         <b-col md="12">
-          <b-alert v-if="isStale && !noConn" variant="danger" show>
+          <b-alert v-if="isStale && !offline" variant="danger" show>
             <font-awesome-icon icon="exclamation-triangle"/>
             Stale data, last update {{ staleTime }}!
           </b-alert>
-          <b-alert v-else-if="noConn" variant="danger" show>
+          <b-alert v-else-if="offline" variant="danger" show>
             <font-awesome-icon icon="exclamation-triangle"/>
             Failed to fetch data!
           </b-alert>
@@ -112,7 +112,7 @@
           <b-col v-if="!loadingDownTimeClick" md="12">
             <b-button
               @click="getDownTime(false)"
-              :disabled="noConn || noData >= 3"
+              :disabled="offline || noData >= 3"
               size="sm"
               variant="outline-warning"
               class="mb-4">
@@ -137,7 +137,7 @@
         <b-col md="12" class="fixed-bottom clear-history-bg">
           <b-button
             @click="clearDownTime()"
-            :disabled="noConn"
+            :disabled="offline"
             size="sm"
             variant="danger"
             class="mt-2 mb-2">
@@ -174,7 +174,7 @@ export default {
   data: () => {
     return {
       timeOut: 60,
-      noConn: false,
+      offline: false,
       loading: true,
       loadingDownTime: true,
       loadingDownTimeClick: false,
@@ -259,7 +259,7 @@ export default {
       })
       .then(data => {
         this.loading = false
-        this.noConn = false
+        this.offline = false
         this.sP = data
         this.sP0 = this.sP.results[0]
         const {created, ...rest} = this.sP0
@@ -281,7 +281,7 @@ export default {
       })
       .catch(err => {
         this.loading = false
-        this.noConn = true
+        this.offline = true
         const {created, ...rest} = this.sP0
         for (let i in rest) {
           this.sP0[i] = 'Unknown'
@@ -332,7 +332,7 @@ export default {
       .catch(err => {
         this.loading = false
         this.loadingDownTimeClick = false
-        this.noConn = true
+        this.offline = true
         console.log(`Downtimes: ${err.message}`)
       })
     },
