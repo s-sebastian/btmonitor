@@ -1,105 +1,152 @@
 <template>
-<b-container v-if="!loading" class="text-center text-muted">
- <b-row>
-    <b-col md="12">
-      <b-alert v-if="isStale && !noConn" variant="danger" show>
-        <font-awesome-icon icon="exclamation-triangle"/>
-        Stale data, last update {{ staleTime }}!
-      </b-alert>
-      <b-alert v-else-if="noConn" variant="danger" show>
-        <font-awesome-icon icon="exclamation-triangle"/>
-        Failed to fetch data!
-      </b-alert>
-      <b-alert v-else variant="light" show class="mb-0">
-        <small>Latest results from {{ lastUpdate }}</small>
-      </b-alert>
-    </b-col>
-  </b-row>
-  <b-row>
-    <b-col md="12">
-      <b-card-group deck class="mb-4">
-        <b-card :border-variant="statusClass">
-          <p class="card-text">
-            <font-awesome-icon icon="power-off"/>
-            <strong> Status:</strong>
-            <span :class="'text-' + statusClass"> {{ status }}</span>
-          </p>
-        </b-card>
-        <b-card :border-variant="onlineClass">
-          <p class="card-text">
-            <font-awesome-icon icon="exchange-alt"/>
-            <strong> Online:</strong>
-            <span :class="'text-' + onlineClass"> {{ online }}</span>
-          </p>
-        </b-card>
-        <b-card :border-variant="downSpeedClass">
-          <p class="card-text">
-            <font-awesome-icon icon="arrow-circle-down"/>
-            <strong> Download:</strong>
-            <span :class="'text-' + downSpeedClass"> {{ downSpeed }}</span>
-          </p>
-        </b-card>
-        <b-card :border-variant="upSpeedClass">
-          <p class="card-text">
-            <font-awesome-icon icon="arrow-circle-up"/>
-            <strong> Upload:</strong>
-            <span :class="'text-' + upSpeedClass"> {{ upSpeed }}</span>
-          </p>
-        </b-card>
-      </b-card-group>
-    </b-col>
-  </b-row>
-  <b-row>
-    <b-col md="12">
-      <b-card-group deck>
-        <b-card no-body>
-          <b-card-body>
-            <p class="card-text">
-              <font-awesome-icon icon="history"/>
-              <strong> System uptime:</strong>
-              <span :class="'text-' + systemUptimeClass"> {{ systemUptime }}</span>
-            </p>
-          </b-card-body>
-          <line-chart css-classes="chart-wrapper" :chart-data="systemUptimeData"/>
-        </b-card>
-        <b-card no-body>
-          <b-card-body>
-            <p class="card-text">
-              <font-awesome-icon icon="history"/>
-              <strong> Network uptime:</strong>
-              <span :class="'text-' + networkUptimeClass"> {{ networkUptime }}</span>
-            </p>
-          </b-card-body>
-          <line-chart css-classes="chart-wrapper" :chart-data="networkUptimeData"/>
-        </b-card>
-      </b-card-group>
-    </b-col>
-  </b-row>
-  <div v-if="isDownTime" class="text-small">
-  <b-row>
-    <b-col md="12" class="mt-4 text-center">
-      Downtime for this month so far (x{{ downTime.count  }}): {{ downTime.total }}
-    </b-col>
-  </b-row>
-  <b-row>
-    <b-col md="12" class="mt-4 text-left">
-      <b-table responsive small :items="downTime.results" :fields="fields"></b-table>
-    </b-col>
-  </b-row>
+  <div>
+    <b-container fluid class="text-center text-muted">
+      <b-row>
+        <b-col md="12" class="p-0 fixed-top">
+          <b-progress
+            :value="progressCounter"
+            :max="progressMax"
+            height="2px"
+            variant="warning">
+          </b-progress>
+        </b-col>
+      </b-row>
+    </b-container>
+    <b-container v-if="!loading" class="text-center text-muted">
+      <b-row>
+        <b-col md="12">
+          <b-alert v-if="isStale && !noConn" variant="danger" show>
+            <font-awesome-icon icon="exclamation-triangle"/>
+            Stale data, last update {{ staleTime }}!
+          </b-alert>
+          <b-alert v-else-if="noConn" variant="danger" show>
+            <font-awesome-icon icon="exclamation-triangle"/>
+            Failed to fetch data!
+          </b-alert>
+          <b-alert v-else variant="light" show class="mb-0">
+          <small>Latest results from {{ lastUpdate }}</small>
+          </b-alert>
+        </b-col>
+      </b-row>
+      <b-row>
+        <b-col md="12">
+          <b-card-group deck class="mb-4">
+            <b-card :border-variant="statusClass">
+              <p class="card-text">
+                <font-awesome-icon icon="power-off"/>
+                <strong> Status:</strong>
+                <span :class="'text-' + statusClass"> {{ status }}</span>
+              </p>
+            </b-card>
+            <b-card :border-variant="onlineClass">
+              <p class="card-text">
+                <font-awesome-icon icon="exchange-alt"/>
+                <strong> Online:</strong>
+                <span :class="'text-' + onlineClass"> {{ online }}</span>
+              </p>
+            </b-card>
+            <b-card :border-variant="downSpeedClass">
+              <p class="card-text">
+                <font-awesome-icon icon="arrow-circle-down"/>
+                <strong> Download:</strong>
+                <span :class="'text-' + downSpeedClass"> {{ downSpeed }}</span>
+              </p>
+            </b-card>
+            <b-card :border-variant="upSpeedClass">
+              <p class="card-text">
+                <font-awesome-icon icon="arrow-circle-up"/>
+                <strong> Upload:</strong>
+                <span :class="'text-' + upSpeedClass"> {{ upSpeed }}</span>
+              </p>
+            </b-card>
+          </b-card-group>
+        </b-col>
+      </b-row>
+      <b-row>
+        <b-col md="12" class="mb-2">
+          <b-card-group deck>
+            <b-card no-body>
+              <b-card-body>
+                <p class="card-text">
+                  <font-awesome-icon icon="history"/>
+                  <strong> System uptime:</strong>
+                  <span :class="'text-' + systemUptimeClass"> {{ systemUptime }}</span>
+                </p>
+              </b-card-body>
+              <line-chart css-classes="chart-wrapper" :chart-data="systemUptimeData"/>
+            </b-card>
+            <b-card no-body>
+              <b-card-body>
+                <p class="card-text">
+                  <font-awesome-icon icon="history"/>
+                  <strong> Network uptime:</strong>
+                  <span :class="'text-' + networkUptimeClass"> {{ networkUptime }}</span>
+                </p>
+              </b-card-body>
+              <line-chart css-classes="chart-wrapper" :chart-data="networkUptimeData"/>
+            </b-card>
+          </b-card-group>
+        </b-col>
+      </b-row>
+      <div v-if="!loadingDownTime" class="text-small">
+        <b-row v-if="downTime.length > 0" v-for="(item, index) in downTime" :key="item.date">
+          <b-col md="12" class="mt-2 text-center">
+            Downtime for {{ item.date }}: {{ item.total }} (x{{ item.results.length }})
+            <b-table
+              v-if="item.results.length > 0"
+              responsive
+              small
+              :items="item.results"
+              :fields="fields"
+              class="mt-4 text-left">
+            </b-table>
+            <div v-else-if="typeof item.detail !== 'undefined'" class="mt-2 mb-3">
+              {{ item.detail }}
+            </div>
+            <div v-else class="mt-2 mb-3">
+              No downtime for this month!
+            </div>
+          </b-col>
+        </b-row>
+        <b-row>
+          <b-col v-if="!loadingDownTimeClick" md="12">
+            <b-button
+              @click="getDownTime(false)"
+              :disabled="noConn || noData >= 3"
+              size="sm"
+              variant="outline-warning"
+              class="mb-4">
+                Load previous month
+            </b-button>
+          </b-col>
+          <b-col v-else md="12" class="mb-4 text-center">
+            <font-awesome-icon icon="spinner" size="lg" spin/>
+          </b-col>
+        </b-row>
+      </div>
+    </b-container>
+    <b-container v-else>
+      <b-row>
+        <b-col md="12" class="mt-4 mb-4 text-center">
+          <font-awesome-icon icon="sync-alt" spin/>
+        </b-col>
+      </b-row>
+    </b-container>
+    <b-container v-if="downTime.length > 1" fluid class="px-0 pt-5 text-center text-muted">
+      <b-row>
+        <b-col md="12" class="fixed-bottom clear-history-bg">
+          <b-button
+            @click="clearDownTime()"
+            :disabled="noConn"
+            size="sm"
+            variant="danger"
+            class="mt-2 mb-2">
+              Clear history
+          </b-button>
+        </b-col>
+      </b-row>
+    </b-container>
   </div>
-  <b-row v-else-if="!noConn" class="text-small">
-    <b-col md="12" class="mt-4 mb-4 text-center">
-      No downtime for this month so far
-    </b-col>
-  </b-row>
-</b-container>
-<b-container v-else>
-  <b-row>
-    <b-col md="12" class="mt-4 mb-4 text-center">
-      <font-awesome-icon icon="sync-alt" spin/>
-    </b-col>
-  </b-row>
-</b-container>
 </template>
 
 <script>
@@ -112,7 +159,9 @@ import {
   durationHours,
   durationHumanize,
   durationUptime,
-  timeFromNow
+  timeFromNow,
+  dateTimeFormat,
+  subtractMonth,
   } from '../utils/momentFormatter'
 
 const { sitePingers, downtime } = options.urls
@@ -125,15 +174,20 @@ export default {
   data: () => {
     return {
       timeOut: 60,
-      noConnInit: false,
       noConn: false,
       loading: true,
+      loadingDownTime: true,
+      loadingDownTimeClick: false,
+      month: null,
       sP: [],
       sP0: {},
-      isDownTime: false,
       downTime: [],
-      showFaults: false,
+      noData: 0,
+      disableLoadButton: false,
       interval: null,
+      intervalProgress: null,
+      refresh: 10000,
+      progressMax: 60,
       systemUptimeData: [],
       networkUptimeData: [],
       fields: ['start', 'end', 'duration']
@@ -189,7 +243,10 @@ export default {
     },
     staleTime () {
       return timeFromNow(this.sP0.created)
-    }
+    },
+    progressCounter () {
+      return 60 - diffSeconds(this.sP0.created)
+    },
   },
   methods: {
     getSitePingers () {
@@ -232,8 +289,14 @@ export default {
         console.log(`SitePingers: ${err.message}`)
       })
     },
-    getDownTime () {
-      fetch(downtime)
+    getDownTime (current=true) {
+      let url = downtime
+      if (!current) {
+        this.loadingDownTimeClick = true
+        this.month = this.month ? subtractMonth(this.month) : subtractMonth()
+        url += `${dateTimeFormat(this.month, 'YYYY/MM')}/`
+      }
+      fetch(url)
       .then(res => {
         if (!res.ok) {
           throw new Error(res.statusText);
@@ -242,24 +305,40 @@ export default {
       })
       .then(data => {
         this.loading = false
-        this.downTime = data
-        const {total, results} = this.downTime
+        const {date, total, results} = data
+        data.date = dateTimeFormat(date, 'MMM-YYYY')
+        data.total = durationHumanize(total)
         if (typeof results !== 'undefined' && results.length > 0) {
-          this.downTime.total = durationHumanize(total)
-          this.downTime.count = results[0].id
-          this.downTime.results.forEach(i => {
-            i.start = dateTimeSeconds(i.start)
-            i.end = dateTimeSeconds(i.end)
-            i.duration = durationHumanize(i.duration)
-          this.isDownTime = true
+          data.results = results.map(({start, end, duration}) => {
+            return {
+              start: dateTimeSeconds(start),
+              end : dateTimeSeconds(end),
+              duration: durationHumanize(duration)
+            }
           })
+        } else if (typeof data.detail !== 'undefined') {
+          data.date = dateTimeFormat(this.month, 'MMM-YYYY')
+          data.results = []
+          this.noData += 1
         }
+        if (current) {
+          this.downTime[0] = data
+        } else {
+          this.downTime.push(data)
+          this.loadingDownTimeClick = false
+        }
+        this.loadingDownTime = false
       })
       .catch(err => {
         this.loading = false
+        this.loadingDownTimeClick = false
         this.noConn = true
         console.log(`Downtimes: ${err.message}`)
       })
+    },
+    clearDownTime () {
+      this.downTime = this.downTime.splice(0, 1)
+      this.month = null
     },
     fillData (labels, data) {
       return {
@@ -301,10 +380,10 @@ export default {
     this.interval = setInterval(function () {
       this.getSitePingers()
       this.getDownTime()
-    }.bind(this), 6000)
+    }.bind(this), this.refresh)
   },
   beforeDestroy () {
-    clearInterval(this.interval)
+    clearInterval(this.interval),
   },
 }
 </script>
@@ -325,5 +404,8 @@ export default {
 .text-small {
   font-size: 80%;
   font-weight: 400;
+}
+.clear-history-bg {
+  background: white;
 }
 </style>

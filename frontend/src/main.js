@@ -12,20 +12,24 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import {
   faArrowCircleDown,
   faArrowCircleUp,
+  faCircleNotch,
   faExchangeAlt,
   faExclamationTriangle,
   faHistory,
   faPowerOff,
+  faSpinner,
   faSyncAlt,
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
   faArrowCircleDown,
   faArrowCircleUp,
+  faCircleNotch,
   faExchangeAlt,
   faExclamationTriangle,
   faHistory,
   faPowerOff,
+  faSpinner,
   faSyncAlt,
 )
 Vue.component('font-awesome-icon', FontAwesomeIcon)
