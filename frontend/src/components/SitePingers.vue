@@ -338,6 +338,7 @@ export default {
     },
     clearDownTime () {
       this.downTime = this.downTime.splice(0, 1)
+      this.noData = 0
       this.month = null
     },
     fillData (labels, data) {
