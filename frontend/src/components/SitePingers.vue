@@ -383,7 +383,7 @@ export default {
     }.bind(this), this.refresh)
   },
   beforeDestroy () {
-    clearInterval(this.interval),
+    clearInterval(this.interval)
   },
 }
 </script>
