@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-container fluid class="text-center text-muted">
+    <b-container v-if="!loading && !isStale && !offline" fluid class="text-center text-muted">
       <b-row>
         <b-col md="12" class="p-0 fixed-top">
           <b-progress
