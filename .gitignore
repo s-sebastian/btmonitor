@@ -1,2 +1,11 @@
+# General
 *.bak*
+*.tmp*
+
+# Environments
+venv*/
+
+# Django
+db.sqlite3
+local_settings.py
 *.pyc
