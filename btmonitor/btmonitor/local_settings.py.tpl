@@ -52,7 +52,7 @@ REST_FRAMEWORK = {
     }
 }
 
-FETCH_URL = 'http://192.168.1.254/0000016400/gui/#/basicStatus'
+FETCH_URL = 'http://localhost/status'
 
 LOGGING = {
     'version': 1,
