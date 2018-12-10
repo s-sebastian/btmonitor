@@ -2,7 +2,7 @@ module.exports = {
   devServer: {
     //proxy: {
     //  '/api': {
-    //    target: 'http://lab.myshell.co.uk',
+    //    target: 'http://localhost',
     //    changeOrigin: true,
     //  },
     //},

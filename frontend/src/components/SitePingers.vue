@@ -4,7 +4,7 @@
       <b-row>
         <b-col md="12" class="p-0 fixed-top">
           <b-progress
-            :value="progressCounter"
+            :value="progressCount"
             :max="progressMax"
             height="2px"
             variant="warning">
@@ -185,9 +185,7 @@ export default {
       noData: 0,
       disableLoadButton: false,
       interval: null,
-      intervalProgress: null,
       refresh: 10000,
-      progressMax: 60,
       systemUptimeData: [],
       networkUptimeData: [],
       fields: ['start', 'end', 'duration']
@@ -244,8 +242,13 @@ export default {
     staleTime () {
       return timeFromNow(this.sP0.created)
     },
-    progressCounter () {
-      return 60 - diffSeconds(this.sP0.created)
+    progressCount () {
+      const diff = diffSeconds(this.sP0.created)
+      const refresh = 60 - (this.refresh / 1000) 
+      return refresh - (Math.floor(diff / 10) * 10)
+    },
+    progressMax () {
+      return 60 - (this.refresh / 1000)
     },
   },
   methods: {
