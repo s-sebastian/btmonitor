@@ -1,4 +1,3 @@
-from django.db.models.functions import TruncMonth
 from django.utils import timezone
 from rest_framework import generics, permissions
 from rest_framework.views import APIView
