@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/s-sebastian/btmonitor.svg?branch=master)](https://travis-ci.org/s-sebastian/btmonitor) [![Coverage Status](https://coveralls.io/repos/github/s-sebastian/btmonitor/badge.svg)](https://coveralls.io/github/s-sebastian/btmonitor)
+[![Build Status](https://travis-ci.org/s-sebastian/btmonitor.svg?branch=master)](https://travis-ci.org/s-sebastian/btmonitor) [![Coverage Status](https://coveralls.io/repos/github/s-sebastian/btmonitor/badge.svg?branch=master)](https://coveralls.io/github/s-sebastian/btmonitor?branch=master)
 
 # BT monitor tool
 
@@ -18,7 +18,7 @@ Requires [Python](https://www.python.org/) 3.5+ to run.
 $ pip install --user pipenv
 ```
 
-Clone the repository and then use the template files in [settings](btmonitor/btmonitor/settings) directory to configure common and environment specific settings.
+Clone the repository and then use the template file in [settings](btmonitor/btmonitor/settings) directory to configure environment specific settings.
 
 ```bash
 $ cd btmonitor
