@@ -1,36 +1,21 @@
 import os
 
-from .settings import *
+from .base import *
 
-SECRET_KEY = ''
-
-DEBUG = True
-
-ALLOWED_HOSTS = []
-
-INSTALLED_APPS.extend([
+INSTALLED_APPS += [
     # 3rd party
     'rest_framework',
     # Local
     'api',
-])
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': '',
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',
-        'PORT': '',
-    }
-}
+]
 
 LANGUAGE_CODE = 'en-gb'
 
 TIME_ZONE = 'Europe/London'
 
 STATIC_URL = '/static/'
+
+FETCH_URL = 'http://localhost/status'
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
@@ -42,17 +27,15 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 100,
-    'DEFAULT_THROTTLE_CLASSES': [
-        'rest_framework.throttling.AnonRateThrottle',
-        'rest_framework.throttling.UserRateThrottle'
-    ],
-    'DEFAULT_THROTTLE_RATES': {
-        'anon': '1/minute',
-        'user': '1000/day'
-    }
+#    'DEFAULT_THROTTLE_CLASSES': [
+#        'rest_framework.throttling.AnonRateThrottle',
+#        'rest_framework.throttling.UserRateThrottle'
+#    ],
+#    'DEFAULT_THROTTLE_RATES': {
+#        'anon': '1/minute',
+#        'user': '1000/day'
+#    }
 }
-
-FETCH_URL = 'http://localhost/status'
 
 LOGGING = {
     'version': 1,
