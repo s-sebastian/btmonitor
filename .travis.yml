@@ -1,0 +1,15 @@
+language: python
+cache: pip
+python:
+  - '3.6'
+env:
+  - DJANGO_SETTINGS_MODULE=btmonitor.test
+install:
+  - pip install -r requirements.txt
+  - pip install coverage
+  - pip install coveralls
+script:
+  - cd btmonitor && python manage.py test
+  - coverage run manage.py test
+after_success:
+  coveralls
