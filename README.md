@@ -23,7 +23,7 @@ Clone the repository and then use the template file in [settings](btmonitor/btmo
 ```bash
 $ cd btmonitor
 $ pipenv sync
-$ export DJANGO_SETTINGS_MODULE=btmonitor.local_settings
+$ export DJANGO_SETTINGS_MODULE=btmonitor.settings.local
 $ python manage.py makemigrations
 $ python manage.py migrate
 $ python manage.py runserver
