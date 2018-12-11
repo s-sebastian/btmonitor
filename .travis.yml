@@ -3,7 +3,7 @@ cache: pip
 python:
   - '3.6'
 env:
-  - DJANGO_SETTINGS_MODULE=btmonitor.test
+  - DJANGO_SETTINGS_MODULE=btmonitor.settings.test
 install:
   - pip install -r requirements.txt
   - pip install coverage
