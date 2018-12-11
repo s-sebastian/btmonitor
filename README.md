@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/s-sebastian/btmonitor.svg?branch=master)](https://travis-ci.org/s-sebastian/btmonitor) [![Coverage Status](https://coveralls.io/repos/github/s-sebastian/btmonitor/badge.svg)](https://coveralls.io/github/s-sebastian/btmonitor)
+
 # BT monitor tool
 
 A Django app to scrape stats from BT Smart Hub status page and display them in real time.
@@ -12,15 +14,15 @@ It was created for BT Smart Hub 6.
 
 Requires [Python](https://www.python.org/) 3.5+ to run.
 
-```bash
+```
 $ pip install --user pipenv
-$ cd btmonitor
-$ pipenv sync
 ```
 
-Clone the repository and then use the [local_settings.py.tpl](btmonitor/btmonitor/local_settings.py.tpl) template file to configure all required settings.
+Clone the repository and then use the template files in [settings](btmonitor/btmonitor/settings) directory to configure common and environment specific settings.
 
 ```bash
+$ cd btmonitor
+$ pipenv sync
 $ export DJANGO_SETTINGS_MODULE=btmonitor.local_settings
 $ python manage.py makemigrations
 $ python manage.py migrate
