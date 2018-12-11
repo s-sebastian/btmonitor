@@ -7,5 +7,5 @@ venv*/
 
 # Django
 db.sqlite3
-local_settings.py
 *.pyc
+**/settings/local.py
