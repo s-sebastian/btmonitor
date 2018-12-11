@@ -25,6 +25,10 @@ class SitePingerTestCase(TestCase):
         self.client = Client()
 
     def test_downtime(self):
+        response = self.client.get(f'/api/downtime/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_downtime_with_params(self):
         fmt = '%Y/%m'
         date = timezone.now().strftime(fmt)
         response = self.client.get(f'/api/downtime/{date}/')
@@ -34,6 +38,11 @@ class SitePingerTestCase(TestCase):
             '%Y-%m-%dT%H:%M:%S'
         )
         self.assertEqual(resp_date.strftime(fmt), date)
+
+    def test_no_data(self):
+        response = self.client.get('/api/downtime/2018/01/')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json()['detail'], 'No data available.')
 
     def test_invalid_date(self):
         response = self.client.get('/api/downtime/2018/13/')
