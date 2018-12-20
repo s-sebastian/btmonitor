@@ -2,6 +2,7 @@ from django.utils import timezone
 from rest_framework import generics, permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework import status
 from .models import SitePinger
 from .serializers import SitePingerSerializer
 from .pagination import SitePingerPagination
@@ -73,7 +74,10 @@ class DowntimeListView(APIView):
                 raise ValueError
             date = timezone.datetime(year=year, month=month, day=1)
         except ValueError as e:
-            return Response({'detail': 'Invalid date.'}, status=400)
+            return Response(
+                {'detail': 'Invalid date.'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
         return Response(self.get_data(date))
 
 
