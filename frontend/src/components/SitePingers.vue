@@ -307,7 +307,6 @@ export default {
         return res.json()
       })
       .then(data => {
-        this.loading = false
         const {date, total, results} = data
         data.date = dateTimeFormat(date, 'MMM-YYYY')
         data.total = durationHumanize(total)
