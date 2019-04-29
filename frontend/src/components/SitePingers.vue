@@ -244,8 +244,7 @@ export default {
     },
     progressCount () {
       const diff = diffSeconds(this.sP0.created)
-      const refresh = 60 - (this.refresh / 1000) 
-      return refresh - (Math.floor(diff / 10) * 10)
+      return (Math.floor(diff / 10) * 10)
     },
     progressMax () {
       return 60 - (this.refresh / 1000)
