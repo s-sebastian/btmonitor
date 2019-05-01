@@ -98,6 +98,7 @@
               small
               :items="item.results"
               :fields="fields"
+              :table-class="['text-muted']"
               class="mt-4 text-left">
             </b-table>
             <div v-else-if="typeof item.detail !== 'undefined'" class="mt-2 mb-3">
