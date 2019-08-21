@@ -1,15 +1,15 @@
 -i https://pypi.org/simple
 appdirs==1.4.3
-beautifulsoup4==4.7.1
+beautifulsoup4==4.8.0
 bs4==0.0.1
-django==2.2
-djangorestframework==3.9.2
-mysqlclient==1.4.2.post1
+django==2.2.4
+djangorestframework==3.10.2
+mysqlclient==1.4.4
 pyee==6.0.0
 pyppeteer==0.0.25
-pytz==2019.1
-soupsieve==1.9.1
+pytz==2019.2
+soupsieve==1.9.3
 sqlparse==0.3.0
-tqdm==4.31.1
-urllib3==1.25.1
-websockets==7.0
+tqdm==4.34.0
+urllib3==1.25.3
+websockets==8.0.2
