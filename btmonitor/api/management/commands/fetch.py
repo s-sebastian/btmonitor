@@ -1,4 +1,5 @@
 import asyncio
+import errno
 import re
 import socket
 import time
@@ -95,6 +96,11 @@ class Command(BaseCommand):
             elapsed  = time.time() - start
             dt = parse(html)
             dt['req_time'] = timezone.timedelta(seconds=elapsed)
+        except IOError as e:
+            if e.errno == errno.ENOSPC:
+                error = 'No space left on device'
+            else:
+                error = e
         except TimeoutError as e:
             dt['status'] = 'Timeout'
             error = e
