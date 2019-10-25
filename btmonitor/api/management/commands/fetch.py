@@ -16,12 +16,13 @@ from api.models import Note, SitePinger
 URL = settings.FETCH_URL
 
 def is_online(host='1.1.1.1'):
-    try:
-        s = socket.create_connection((host, 53), 1)
-        s.close()
-        return True
-    except Exception as e:
-        pass
+    for _ in range(3):
+        try:
+            s = socket.create_connection((host, 53), 1)
+            s.close()
+            return True
+        except Exception as e:
+            pass
 
     return False
 
