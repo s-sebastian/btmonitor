@@ -12,7 +12,7 @@ It was created for BT Smart Hub 6.
 
 ##### Backend:
 
-Requires [Python](https://www.python.org/) 3.5+ to run.
+Requires [Python](https://www.python.org/) 3.6+ to run.
 
 ```
 $ pip install --user pipenv
