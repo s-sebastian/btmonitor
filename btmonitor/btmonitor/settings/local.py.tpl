@@ -19,6 +19,8 @@ DATABASES = {
     }
 }
 
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 INSTALLED_APPS += [
     # 3rd party
     'rest_framework',
