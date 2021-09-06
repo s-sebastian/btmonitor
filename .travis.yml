@@ -1,0 +1,22 @@
+dist: xenial
+language: python
+cache: pip
+sudo: false
+python:
+  - '3.6'
+env:
+  - DJANGO_SETTINGS_MODULE=btmonitor.settings.test
+branches:
+  only:
+  - master
+install:
+  - pip install -r requirements.txt
+  - pip install coverage
+  - pip install coveralls
+script:
+  - cd btmonitor && python manage.py test
+  - coverage run --source='.' manage.py test
+after_success:
+  coveralls
+notifications:
+  email: true
