@@ -6,7 +6,7 @@ name = "pypi"
 [packages]
 pyppeteer = "*"
 "bs4" = "*"
-django = "*"
+django = "==3.2.7"
 mysqlclient = "*"
 djangorestframework = "*"
 
