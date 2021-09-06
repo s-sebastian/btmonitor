@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/s-sebastian/btmonitor.svg?branch=master)](https://travis-ci.org/s-sebastian/btmonitor) [![Coverage Status](https://coveralls.io/repos/github/s-sebastian/btmonitor/badge.svg?branch=master)](https://coveralls.io/github/s-sebastian/btmonitor?branch=master)
+[![Build Status](https://app.travis-ci.com/s-sebastian/btmonitor.svg?branch=master)](https://app.travis-ci.com/s-sebastian/btmonitor) [![Coverage Status](https://coveralls.io/repos/github/s-sebastian/btmonitor/badge.svg?branch=master)](https://coveralls.io/github/s-sebastian/btmonitor?branch=master)
 
 # BT monitor tool
 
