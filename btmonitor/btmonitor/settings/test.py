@@ -7,8 +7,6 @@ SECRET_KEY = get_random_secret_key()
 
 DEBUG = True
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
 INSTALLED_APPS += [
     # 3rd party
     'rest_framework',
@@ -21,6 +19,8 @@ LANGUAGE_CODE = 'en-gb'
 TIME_ZONE = 'Europe/London'
 
 STATIC_URL = '/static/'
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 FETCH_URL = 'http://localhost/status'
 
