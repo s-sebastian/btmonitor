@@ -10,9 +10,7 @@ branches:
   only:
   - master
 install:
-  - pip install -r requirements.txt
-  - pip install coverage
-  - pip install coveralls
+  - pip install -r requirements.txt coverage coveralls
 script:
   - cd btmonitor && python manage.py test
   - coverage run --source='.' manage.py test
