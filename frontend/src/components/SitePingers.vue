@@ -220,11 +220,11 @@ export default {
     },
     downSpeedClass () {
       const speed = this.convertToMb(this.downSpeed)
-      return (speed >= 40 && speed < 60) ? 'warning' : (speed >= 60) ? 'success' : 'danger'
+      return (speed >= 20 && speed < 40) ? 'warning' : (speed >= 40) ? 'success' : 'danger'
     },
     upSpeedClass () {
       const speed = this.convertToMb(this.upSpeed)
-      return (speed >= 10 && speed < 20) ? 'warning' : (speed >= 20) ? 'success' : 'danger'
+      return (speed >= 5 && speed < 10) ? 'warning' : (speed >= 10) ? 'success' : 'danger'
     },
     systemUptimeClass () {
       const uptime = durationHours(this.sP0.system_uptime)
